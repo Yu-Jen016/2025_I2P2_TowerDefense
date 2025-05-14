@@ -13,14 +13,33 @@ Slider::Slider(float x, float y, float w, float h)
     Position.y += h / 2;
     Anchor = Engine::Point(0.5, 0.5);
 }
+Slider::Slider(float x, float y, float w, float h, float v)
+    : ImageButton("stage-select/slider.png", "stage-select/slider-blue.png", x + w * (v - 1.0f), y),
+      Bar("stage-select/bar.png", x, y, w, h),
+      End1("stage-select/end.png", x, y + h / 2, 0, 0, 0.5, 0.5),
+      End2("stage-select/end.png", x + w, y + h / 2, 0, 0, 0.5, 0.5) {
+    Position.x += w;
+    Position.y += h / 2;
+    Anchor = Engine::Point(0.5, 0.5);
+}
 void Slider::Draw() const {
     // TODO HACKATHON-5 (3/4): The slider's component should be drawn here.
+    this->Bar.Draw();
+    this->End1.Draw();
+    this->End2.Draw();
+    ImageButton::Draw();
 }
 void Slider::SetOnValueChangedCallback(std::function<void(float value)> onValueChangedCallback) {
     OnValueChangedCallback = onValueChangedCallback;
 }
 void Slider::SetValue(float value) {
     // TODO HACKATHON-5 (4/4): Set the value of the slider and call the callback.
+    if (Down) {
+        this->value = value;
+        ImageButton::Position.x = value * Bar.Size.x + Bar.Position.x;
+        if (OnValueChangedCallback)
+            OnValueChangedCallback(value);
+    }
 }
 void Slider::OnMouseDown(int button, int mx, int my) {
     if ((button & 1) && mouseIn)

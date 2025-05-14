@@ -37,8 +37,12 @@ void StartScene::Initialize() {
     btn->SetOnClickCallback(std::bind(&StartScene::SettingsOnClick, this, 2));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Settings", "pirulen.ttf", 48, halfW, halfH * 3 / 2, 0, 0, 0, 255, 0.5, 0.5));
+
+    bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume, AudioHelper::BGMTime);
 }
 void StartScene::Terminate() {
+    AudioHelper::StopSample(bgmInstance);
+    bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
     IScene::Terminate();
 }
 void StartScene::PlayOnClick(int stage) {
@@ -46,4 +50,8 @@ void StartScene::PlayOnClick(int stage) {
 }
 void StartScene::SettingsOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("settings");
+}
+void StartScene::Update(float deltatime) {
+    AudioHelper::BGMTime += deltatime;
+    // printf("%f\n", AudioHelper::BGMTime);
 }

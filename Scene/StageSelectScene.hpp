@@ -19,6 +19,7 @@ public:
 
     void BGMSlideOnValueChanged(float value);
     void SFXSlideOnValueChanged(float value);
+    void Update(float deltaTime) override;
 };
 
 #endif   // STAGESELECTSCENE_HPP

@@ -7,6 +7,7 @@
 
 float AudioHelper::BGMVolume = 1.0;
 float AudioHelper::SFXVolume = 1.0;
+float AudioHelper::BGMTime = 0.0;
 ALLEGRO_SAMPLE_ID AudioHelper::PlayAudio(const std::string &audio) {
     ALLEGRO_SAMPLE *sample = Engine::Resources::GetInstance().GetSample(audio).get();
     ALLEGRO_SAMPLE_ID id;
