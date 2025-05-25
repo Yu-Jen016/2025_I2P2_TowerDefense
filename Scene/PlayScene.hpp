@@ -41,6 +41,8 @@ public:
     static const Engine::Point SpawnGridPoint;
     static const Engine::Point EndGridPoint;
     static const std::vector<int> code;
+    static const std::list<int> code1;
+    static const std::list<int> code2;
     int MapId;
     float ticks;
     float deathCountDown;
