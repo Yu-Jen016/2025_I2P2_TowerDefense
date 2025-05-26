@@ -2,7 +2,7 @@
 #include <cmath>
 #include <string>
 
-#include "Bullet/FireBullet.hpp"
+#include "Bullet/Superbullet.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/Point.hpp"
@@ -19,6 +19,6 @@ void CannonTurret::CreateBullet() {
     float rotation = atan2(diff.y, diff.x);
     Engine::Point normalized = diff.Normalize();
     // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new FireBullet(Position + normalized * 36, diff, rotation, this));
+    getPlayScene()->BulletGroup->AddNewObject(new Superbullet(Position + normalized * 36, diff, rotation, this));
     AudioHelper::PlayAudio("gun.wav");
 }

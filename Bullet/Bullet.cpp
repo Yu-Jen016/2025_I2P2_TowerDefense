@@ -8,6 +8,7 @@
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Bullet/Superbullet.hpp"
 
 PlayScene *Bullet::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -31,7 +32,9 @@ void Bullet::Update(float deltaTime) {
         if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
             OnExplode(enemy);
             enemy->Hit(damage);
-            getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+            if(dynamic_cast<Superbullet*>(this)==nullptr){
+                getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+            }
             return;
         }
     }
