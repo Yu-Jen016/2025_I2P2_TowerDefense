@@ -33,6 +33,7 @@ protected:
     int SpeedMult;
 
 public:
+    bool win;
     static bool DebugMode;
     static const std::vector<Engine::Point> directions;
     static const int MapWidth, MapHeight;

@@ -28,7 +28,7 @@ void WinScene::Initialize() {
     btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", halfW + 250, halfH * 7 / 4 - 50, 400, 100);
     btn->SetOnClickCallback(std::bind(&WinScene::ScoreboardOnClick, this));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Scoreboard", "pirulen.ttf", 48, halfW + 250, halfH * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Score", "pirulen.ttf", 48, halfW + 450, halfH * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
     bgmId = AudioHelper::PlayAudio("win.wav");
 }
 void WinScene::Terminate() {
@@ -50,5 +50,6 @@ void WinScene::BackOnClick(int stage) {
 void WinScene::ScoreboardOnClick() {
     ScoreboardScene *scene = dynamic_cast<ScoreboardScene *>(Engine::GameEngine::GetInstance().GetScene("scoreboard"));
     scene->pageId = 0;
+    scene->scoreData.clear();
     Engine::GameEngine::GetInstance().ChangeScene("scoreboard");
 }

@@ -65,8 +65,9 @@ void ScoreboardScene::ReadScore(){
     while (fin >> data.second >> data.first){
         scoreData.push_back(data);
     }
-    scoreData.resize(50);
+    fin.close();
     std::sort(scoreData.begin(), scoreData.end(), [](auto a, auto b){return a > b;});
+    scoreData.resize(50);
 }
 void ScoreboardScene::BackOnClick(int stage) {
     // Change to select scene.

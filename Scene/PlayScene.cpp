@@ -57,6 +57,7 @@ Engine::Point PlayScene::GetClientSize() {
     return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
+    win = false;
     mapState.clear();
     keyStrokes.clear();
     ticks = 0;
@@ -144,7 +145,7 @@ void PlayScene::Update(float deltaTime) {
         // Check if we should create new enemy.
         ticks += deltaTime;
         if (enemyWaveData.empty()) {
-            if (EnemyGroup->GetObjects().empty()) {
+            if (EnemyGroup->GetObjects().empty() && win == false) {
                 // Free resources.
                 /*delete TileMapGroup;
                 delete GroundEffectGroup;
@@ -156,6 +157,11 @@ void PlayScene::Update(float deltaTime) {
                 delete UIGroup;
                 delete imgTarget;*/
                 // Win.
+                win = true;
+                std::ofstream fout;
+                fout.open("Resource/scoreboard.txt", std::ios_base::app);
+                fout << std::endl << "You " << money << std::endl;
+                fout.close();
                 Engine::GameEngine::GetInstance().ChangeScene("win");
             }
             continue;
