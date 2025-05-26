@@ -12,6 +12,7 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/Point.hpp"
 #include "Engine/Resources.hpp"
+#include "ScoreboardScene.hpp"
 #include "PlayScene.hpp"
 #include "Scene/StartScene.h"
 #include "UI/Component/ImageButton.hpp"
@@ -28,15 +29,30 @@ void StartScene::Initialize() {
 
     AddNewObject(new Engine::Label("Tower Defense", "pirulen.ttf", 120, halfW, halfH / 3 + 50, 10, 255, 255, 255, 0.5, 0.5));
 
-    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 200, 400, 100);
+    // btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 50, 400, 100);
+    // btn->SetOnClickCallback(std::bind(&StartScene::PlayOnClick, this, 1));
+    // AddNewControlObject(btn);
+    // AddNewObject(new Engine::Label("Play", "pirulen.ttf", 48, halfW, halfH / 2 + 100, 0, 0, 0, 255, 0.5, 0.5));
+
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 155, 400, 100);
     btn->SetOnClickCallback(std::bind(&StartScene::PlayOnClick, this, 1));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Play", "pirulen.ttf", 48, halfW, halfH / 2 + 250, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Play", "pirulen.ttf", 48, halfW, halfH / 2 + 205, 0, 0, 0, 255, 0.5, 0.5));
 
-    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH * 3 / 2 - 50, 400, 100);
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 260, 400, 100);
+    btn->SetOnClickCallback(std::bind(&StartScene::ScoreboardOnClick, this));
+    AddNewControlObject(btn);
+    AddNewObject(new Engine::Label("Score", "pirulen.ttf", 48, halfW, halfH / 2 + 310, 0, 0, 0, 255, 0.5, 0.5));
+
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 365, 400, 100);
     btn->SetOnClickCallback(std::bind(&StartScene::SettingsOnClick, this, 2));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Settings", "pirulen.ttf", 48, halfW, halfH * 3 / 2, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Settings", "pirulen.ttf", 48, halfW, halfH / 2 + 415, 0, 0, 0, 255, 0.5, 0.5));
+
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 470, 400, 100);
+    btn->SetOnClickCallback(std::bind(&StartScene::Terminate, this));
+    AddNewControlObject(btn);
+    AddNewObject(new Engine::Label("Exit", "pirulen.ttf", 48, halfW, halfH / 2 + 520, 0, 0, 0, 255, 0.5, 0.5));
 
     bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume, AudioHelper::BGMTime);
 }
@@ -54,4 +70,9 @@ void StartScene::SettingsOnClick(int stage) {
 void StartScene::Update(float deltatime) {
     AudioHelper::BGMTime += deltatime;
     // printf("%f\n", AudioHelper::BGMTime);
+}
+void StartScene::ScoreboardOnClick() {
+    ScoreboardScene *scene = dynamic_cast<ScoreboardScene *>(Engine::GameEngine::GetInstance().GetScene("scoreboard"));
+    scene->pageId = 0;
+    Engine::GameEngine::GetInstance().ChangeScene("scoreboard");
 }
